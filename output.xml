@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 6.0.2 (Python 3.11.3 on win32)" generated="20230619 09:15:47.318" rpa="false" schemaversion="3">
+<suite id="s1" name="DELETEBooks.spec" source="c:\ROBOT_FRAMEWORK\API_BASICO_ROBOT\Tests\DELETEBooks.spec.robot">
+<test id="s1-t1" name="Validação de uma chamada GET na API de books" line="9">
+<kw name="Ter um retorno 200 depois do Delete" library="DELETEBooks.resource">
+<kw name="Criar sessão na ServeRest" library="DELETEBooks.resource">
+<kw name="Create Session" library="RequestsLibrary">
+<arg>alias=ServerRest</arg>
+<arg>url=http://fakerestapi.azurewebsites.net/api/v1/</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230619 09:15:47.655" level="INFO">Creating Session using : alias=ServerRest, url=http://fakerestapi.azurewebsites.net/api/v1/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20230619 09:15:47.654" endtime="20230619 09:15:47.659"/>
+</kw>
+<status status="PASS" starttime="20230619 09:15:47.654" endtime="20230619 09:15:47.659"/>
+</kw>
+<kw name="DELETE On Session" library="RequestsLibrary">
+<var>${RESPOSTA_DELETE}</var>
+<arg>alias=ServerRest</arg>
+<arg>url=Books/123</arg>
+<doc>Sends a DELETE request on a previously created HTTP Session.</doc>
+<msg timestamp="20230619 09:15:48.272" level="INFO">DELETE Request : url=http://fakerestapi.azurewebsites.net/api/v1/Books/123 
+ path_url=/api/v1/Books/123 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg timestamp="20230619 09:15:48.273" level="INFO">DELETE Response : url=http://fakerestapi.azurewebsites.net/api/v1/Books/123 
+ status=200, reason=OK 
+ headers={'Content-Length': '0', 'Date': 'Mon, 19 Jun 2023 12:18:23 GMT', 'Server': 'Kestrel', 'api-supported-versions': '1.0'} 
+ body=None 
+ </msg>
+<msg timestamp="20230619 09:15:48.273" level="INFO">${RESPOSTA_DELETE} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230619 09:15:47.659" endtime="20230619 09:15:48.273"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${RESPOSTA_DELETE.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<msg timestamp="20230619 09:15:48.276" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20230619 09:15:48.274" endtime="20230619 09:15:48.276"/>
+</kw>
+<status status="PASS" starttime="20230619 09:15:47.653" endtime="20230619 09:15:48.277"/>
+</kw>
+<kw name="Criar e deletar um livro" library="DELETEBooks.resource">
+<kw name="Adicionar um novo livro" library="POSTBooks.resource">
+<kw name="Criar sessão na ServeRest" library="POSTBooks.resource">
+<kw name="Create Session" library="RequestsLibrary">
+<arg>alias=ServerRest</arg>
+<arg>url=http://fakerestapi.azurewebsites.net/api/v1/</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230619 09:15:48.279" level="INFO">Creating Session using : alias=ServerRest, url=http://fakerestapi.azurewebsites.net/api/v1/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20230619 09:15:48.278" endtime="20230619 09:15:48.280"/>
+</kw>
+<status status="PASS" starttime="20230619 09:15:48.278" endtime="20230619 09:15:48.280"/>
+</kw>
+<kw name="Body de criação livros" library="BodyPOST.payload">
+<var>${BODY}</var>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${BODY}</var>
+<arg>id=123</arg>
+<arg>title=Teste Jader</arg>
+<arg>description=Teste Jader</arg>
+<arg>pageCount=0</arg>
+<arg>excerpt=0</arg>
+<arg>publishDate=2023-04-10T21:24:09.989Z</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230619 09:15:48.282" level="INFO">${BODY} = {'id': '123', 'title': 'Teste Jader', 'description': 'Teste Jader', 'pageCount': '0', 'excerpt': '0', 'publishDate': '2023-04-10T21:24:09.989Z'}</msg>
+<status status="PASS" starttime="20230619 09:15:48.281" endtime="20230619 09:15:48.283"/>
+</kw>
+<return>
+<value>${BODY}</value>
+<status status="PASS" starttime="20230619 09:15:48.283" endtime="20230619 09:15:48.283"/>
+</return>
+<msg timestamp="20230619 09:15:48.283" level="INFO">${BODY} = {'id': '123', 'title': 'Teste Jader', 'description': 'Teste Jader', 'pageCount': '0', 'excerpt': '0', 'publishDate': '2023-04-10T21:24:09.989Z'}</msg>
+<status status="PASS" starttime="20230619 09:15:48.280" endtime="20230619 09:15:48.283"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${RESPOSTA}</var>
+<arg>alias=ServerRest</arg>
+<arg>url=Books</arg>
+<arg>json=${BODY}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20230619 09:15:48.716" level="INFO">POST Request : url=http://fakerestapi.azurewebsites.net/api/v1/Books 
+ path_url=/api/v1/Books 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '144', 'Content-Type': 'application/json'} 
+ body=b'{"id": "123", "title": "Teste Jader", "description": "Teste Jader", "pageCount": "0", "excerpt": "0", "publishDate": "2023-04-10T21:24:09.989Z"}' 
+ </msg>
+<msg timestamp="20230619 09:15:48.716" level="INFO">POST Response : url=http://fakerestapi.azurewebsites.net/api/v1/Books 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json; charset=utf-8; v=1.0', 'Date': 'Mon, 19 Jun 2023 12:18:23 GMT', 'Server': 'Kestrel', 'Transfer-Encoding': 'chunked', 'api-supported-versions': '1.0'} 
+ body={"id":123,"title":"Teste Jader","description":"Teste Jader","pageCount":0,"excerpt":"0","publishDate":"2023-04-10T21:24:09.989Z"} 
+ </msg>
+<msg timestamp="20230619 09:15:48.717" level="INFO">${RESPOSTA} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230619 09:15:48.284" endtime="20230619 09:15:48.717"/>
+</kw>
+<kw name="Set Test Variable" library="BuiltIn">
+<arg>${RESPOSTA_POST}</arg>
+<arg>${RESPOSTA}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<msg timestamp="20230619 09:15:48.718" level="INFO">${RESPOSTA_POST} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230619 09:15:48.717" endtime="20230619 09:15:48.718"/>
+</kw>
+<status status="PASS" starttime="20230619 09:15:48.278" endtime="20230619 09:15:48.718"/>
+</kw>
+<kw name="Set Test Variable" library="BuiltIn">
+<arg>${RESP_CONSULTA}</arg>
+<arg>${RESPOSTA_POST.json()}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<msg timestamp="20230619 09:15:48.720" level="INFO">${RESP_CONSULTA} = {'id': 123, 'title': 'Teste Jader', 'description': 'Teste Jader', 'pageCount': 0, 'excerpt': '0', 'publishDate': '2023-04-10T21:24:09.989Z'}</msg>
+<status status="PASS" starttime="20230619 09:15:48.719" endtime="20230619 09:15:48.720"/>
+</kw>
+<kw name="Set Test Variable" library="BuiltIn">
+<arg>${ID_PARA_DELETE}</arg>
+<arg>${RESP_CONSULTA['id']}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<msg timestamp="20230619 09:15:48.721" level="INFO">${ID_PARA_DELETE} = 123</msg>
+<status status="PASS" starttime="20230619 09:15:48.720" endtime="20230619 09:15:48.721"/>
+</kw>
+<kw name="Criar sessão na ServeRest" library="DELETEBooks.resource">
+<kw name="Create Session" library="RequestsLibrary">
+<arg>alias=ServerRest</arg>
+<arg>url=http://fakerestapi.azurewebsites.net/api/v1/</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230619 09:15:48.721" level="INFO">Creating Session using : alias=ServerRest, url=http://fakerestapi.azurewebsites.net/api/v1/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20230619 09:15:48.721" endtime="20230619 09:15:48.721"/>
+</kw>
+<status status="PASS" starttime="20230619 09:15:48.721" endtime="20230619 09:15:48.722"/>
+</kw>
+<kw name="DELETE On Session" library="RequestsLibrary">
+<var>${RESPOSTA_DELETE}</var>
+<arg>alias=ServerRest</arg>
+<arg>url=Books/${ID_PARA_DELETE}</arg>
+<doc>Sends a DELETE request on a previously created HTTP Session.</doc>
+<msg timestamp="20230619 09:15:49.183" level="INFO">DELETE Request : url=http://fakerestapi.azurewebsites.net/api/v1/Books/123 
+ path_url=/api/v1/Books/123 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg timestamp="20230619 09:15:49.183" level="INFO">DELETE Response : url=http://fakerestapi.azurewebsites.net/api/v1/Books/123 
+ status=200, reason=OK 
+ headers={'Content-Length': '0', 'Date': 'Mon, 19 Jun 2023 12:18:24 GMT', 'Server': 'Kestrel', 'api-supported-versions': '1.0'} 
+ body=None 
+ </msg>
+<msg timestamp="20230619 09:15:49.184" level="INFO">${RESPOSTA_DELETE} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230619 09:15:48.722" endtime="20230619 09:15:49.184"/>
+</kw>
+<kw name="Set Test Variable" library="BuiltIn">
+<arg>${RESPOSTA_DEL}</arg>
+<arg>${RESPOSTA_DELETE}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<msg timestamp="20230619 09:15:49.186" level="INFO">${RESPOSTA_DEL} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20230619 09:15:49.184" endtime="20230619 09:15:49.186"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${RESPOSTA_DEL.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<msg timestamp="20230619 09:15:49.187" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20230619 09:15:49.186" endtime="20230619 09:15:49.187"/>
+</kw>
+<status status="PASS" starttime="20230619 09:15:48.277" endtime="20230619 09:15:49.188"/>
+</kw>
+<status status="PASS" starttime="20230619 09:15:47.652" endtime="20230619 09:15:49.188"/>
+</test>
+<status status="PASS" starttime="20230619 09:15:47.327" endtime="20230619 09:15:49.190"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="0" skip="0" id="s1" name="DELETEBooks.spec">DELETEBooks.spec</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
